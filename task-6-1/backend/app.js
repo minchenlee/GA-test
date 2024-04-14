@@ -31,7 +31,7 @@ app.set("views", path.join(__dirname, "views"));
 
 // log to the console and to a file
 app.use(consoleLogger); // log to the console
-app.use(fileLogger); // log to a file
+// app.use(fileLogger); // log to a file
 // app.use(morgan('dev'));
 
 app.use(express.json());
