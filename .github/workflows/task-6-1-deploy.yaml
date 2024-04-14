@@ -17,6 +17,16 @@ jobs:
           curl -H "Content-Type: application/json" \
           -d "{\"content\": \"Deployment approval needed: [Approve Deployment](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})\"}" \
           $DISCORD_WEBHOOK_URL
+
+  approval:
+    needs: notify
+    runs-on: ubuntu-latest
+    steps:
+      - name: Manual approval
+        uses: trstringer/manual-approval@v1
+        with:
+          timeout_minutes: 1440  # This is 24 hours; adjust as necessary.
+
   deploy:
     needs: notify
     runs-on: ubuntu-latest
