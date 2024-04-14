@@ -34,12 +34,11 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ${{ steps.ecr-login.outputs.registry }}/my-image:${{ github.ref_name }} .
-
+          docker build -t ${{ steps.ecr-login.outputs.registry }}/${{ vars.ECR_REPO_NAME }}:${{ github.ref_name }} .
       - name: Scan Docker image for vulnerabilities
         uses: aquasecurity/trivy-action@0.2.1
         with:
-          image-ref: '${{ steps.ecr-login.outputs.registry }}/my-image:${{ github.ref_name }}'
+          image-ref: '${{ steps.ecr-login.outputs.registry }}/${{ vars.ECR_REPO_NAME }}:${{ github.ref_name }}'
           format: 'table'
           exit-code: '1'  # Causes the workflow to fail if vulnerabilities are found
           ignore-unfixed: false
