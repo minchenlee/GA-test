@@ -55,7 +55,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
-            docker pull ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPO_NAME }}:${{ github.event.inputs.version }}
-            docker stop backend || true
-            docker rm backend || true
-            docker run --name backend -d ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPO_NAME }}:${{ github.event.inputs.version }}
+            sudo docker pull ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPO_NAME }}:${{ github.event.inputs.version }}
+            sudo docker stop backend || true
+            sudo docker rm backend || true
+            sudo docker run --name backend -d ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPO_NAME }}:${{ github.event.inputs.version }}
