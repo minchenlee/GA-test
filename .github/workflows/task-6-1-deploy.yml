@@ -23,6 +23,7 @@ jobs:
         id: create-pr
         uses: peter-evans/create-pull-request@v3
         with:
+          secret: ${{ secrets.TOKEN }}
           commit-message: "Deploy request for version ${{ github.event.inputs.version }}"
           title: "Deployment Approval Required for version ${{ github.event.inputs.version }}"
           body: "Please review and approve this pull request to deploy the version to EC2."
