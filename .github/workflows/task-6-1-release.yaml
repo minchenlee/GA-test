@@ -33,8 +33,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t my-image:${{ github.ref_name }} .
-          docker tag my-image:${{ github.ref_name }} ${{ secrets.AWS_ECR_REGISTRY }}/my-image:${{ github.ref_name }}
+          docker build -t ${{ steps.ecr-login.outputs.registry }}/my-image:${{ github.ref_name }} .
 
       - name: Scan Docker image for vulnerabilities
         uses: aquasecurity/trivy-action@0.2.1
@@ -48,5 +47,5 @@ jobs:
 
       - name: Push Docker image to Amazon ECR
         run: |
-          docker push ${{ secrets.AWS_ECR_REGISTRY }}/my-image:${{ github.ref_name }}
+          docker push ${{ steps.ecr-login.outputs.registry }}/my-image:${{ github.ref_name }}
 
