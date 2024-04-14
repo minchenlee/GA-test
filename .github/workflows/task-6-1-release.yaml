@@ -47,5 +47,5 @@ jobs:
 
       - name: Push Docker image to Amazon ECR
         run: |
-          docker push ${{ steps.ecr-login.outputs.registry }}/my-image:${{ github.ref_name }}
+          docker push ${{ steps.ecr-login.outputs.registry }}/${{ vars.ECR_REPO_NAME }}:${{ github.ref_name }}
 
