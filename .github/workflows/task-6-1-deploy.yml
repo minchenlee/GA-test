@@ -8,27 +8,31 @@ on:
         required: true
 
 jobs:
+  approval:
+    runs-on: ubuntu-latest
+    outputs:
+      issue-url: ${{ steps.approval.outputs.issue-url }}  # Assuming the action outputs the URL of the created issue
+    steps:
+      - name: Manual approval
+        id: approval
+        uses: trstringer/manual-approval@v1
+        with:
+          secret: ${{ secrets.TOKEN }}  # Ensure you are using the correct token variable
+          minimum-approvals: 1
+          approvers: minchenlee
+
   notify:
+    needs: approval
     runs-on: ubuntu-latest
     steps:
       - name: Send notification to Discord
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
+          ISSUE_URL="${{ needs.approval.outputs.issue-url }}"
           curl -H "Content-Type: application/json" \
-          -d "{\"content\": \"Deployment approval needed: [Approve Deployment](https://github.com/${{ github.repository }}/pulls)\"}" \
+          -d "{\"content\": \"Deployment approval needed: [Approve Deployment]($ISSUE_URL)\"}" \
           $DISCORD_WEBHOOK_URL
-
-  approval:
-    needs: notify
-    runs-on: ubuntu-latest
-    steps:
-      - name: Manual approval
-        uses: trstringer/manual-approval@v1
-        with:
-          secret: ${{ secrets.TOKEN }}
-          minimum-approvals: 1
-          approvers: minchenlee
 
   deploy:
     needs: notify
