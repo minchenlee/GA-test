@@ -19,15 +19,16 @@ jobs:
           -d "{\"content\": \"Deployment approval needed: [Approve Deployment](https://github.com/${{ github.repository }}/pulls)\"}" \
           $DISCORD_WEBHOOK_URL
 
-      - name: Create Pull Request for Deployment
-        id: create-pr
-        uses: peter-evans/create-pull-request@v3
+  approval:
+    needs: notify
+    runs-on: ubuntu-latest
+    steps:
+      - name: Manual approval
+        uses: trstringer/manual-approval@v1
         with:
           secret: ${{ secrets.TOKEN }}
-          commit-message: "Deploy request for version ${{ github.event.inputs.version }}"
-          title: "Deployment Approval Required for version ${{ github.event.inputs.version }}"
-          body: "Please review and approve this pull request to deploy the version to EC2."
-          branch: "deploy-${{ github.event.inputs.version }}"
+          minimum-approvals: 1
+          approvers: minchenlee
 
   deploy:
     needs: notify
