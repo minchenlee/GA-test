@@ -1,0 +1,4 @@
+# ...
+#!/bin/sh
+. "$(dirname "$0")/husky.sh"
+cd ./task-6-1/backend && npm run lint
