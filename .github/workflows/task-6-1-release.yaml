@@ -34,7 +34,6 @@ jobs:
       - name: Build Docker image
         run: |
           docker build -t my-image:${{ github.ref_name }} .
-          docker tag my-image:${{ github.ref_name }} ${{ steps.login-ecr.outputs.registry }}/my-image:${{ github.ref_name }}
 
       - name: Scan Docker image for vulnerabilities
         uses: aquasecurity/trivy-action@0.2.1
