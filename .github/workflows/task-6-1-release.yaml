@@ -4,10 +4,15 @@ on:
   push:
     tags:
       - '*'
+    branches:
+      - 'task-6-1'
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 'task-6-1/backend'
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
