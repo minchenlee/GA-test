@@ -25,7 +25,7 @@ jobs:
       - name: Manual approval
         uses: trstringer/manual-approval@v1
         with:
-          timeout_minutes: 1440  # This is 24 hours; adjust as necessary.
+          minimum-approvals: 1
 
   deploy:
     needs: notify
