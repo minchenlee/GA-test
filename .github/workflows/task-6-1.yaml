@@ -2,7 +2,7 @@ name: Continuous Integration for PUSH
 on:
   push:
     branches:
-      - '**'
+      - 'task-6-1-dev'
     paths:
     - 'task-6-1/backend/**'
 jobs:
