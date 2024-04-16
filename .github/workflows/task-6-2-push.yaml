@@ -1,4 +1,4 @@
-name: PUSH - Terraform Validation
+name: Terraform Validation - PUSH
 
 on:
   push:
