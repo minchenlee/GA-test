@@ -5,7 +5,7 @@ on:
     branches:
       - '**'
     paths:
-      - 'tasks/task-6-2/**' 
+      - 'tasks/task-6-2/terraform/**'
 
 jobs:
   validate:
