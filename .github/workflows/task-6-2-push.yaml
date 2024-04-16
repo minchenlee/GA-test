@@ -5,13 +5,13 @@ on:
     branches:
       - 'task-6-2-dev'
     paths:
-      - 'tasks/task-6-2/terraform/**'
+      - 'task-6-2/terraform/**'
 
 jobs:
   validate:
     defaults:
       run:
-        working-directory: 'tasks/task-6-2/terraform'
+        working-directory: 'task-6-2/terraform'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
