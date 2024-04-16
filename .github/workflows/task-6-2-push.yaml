@@ -3,9 +3,9 @@ name: PUSH - Terraform Validation
 on:
   push:
     branches:
-      - '**'
+      - 'task-6-2-dev'
     paths:
-      - 'tasks/task-6-2/**' 
+      - 'tasks/task-6-2/terraform/**'
 
 jobs:
   validate:
