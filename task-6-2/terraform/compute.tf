@@ -17,7 +17,7 @@ resource "aws_instance" "backend-a" {
   instance_type               = "t2.micro"
   key_name                    = "task-0-1-a"
   vpc_security_group_ids      = [aws_security_group.backend-instance.id]
-  subnet_id                   = "subnet-0e3f1389d5169d7d3"
+  subnet_id                   = "subnet-03b960675163ea6e3"
   associate_public_ip_address = true
 
   user_data = <<-EOF
