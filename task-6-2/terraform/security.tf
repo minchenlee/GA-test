@@ -4,8 +4,8 @@
 
 # Security group for backend instance
 resource "aws_security_group" "backend-instance" {
-  name        = "thesis-backend-instance"
-  description = "Security group for thesis backend instance"
+  name        = "backend-instance"
+  description = "Security group for backend instance"
   vpc_id      = module.vpc.vpc_id
 
   ingress {
