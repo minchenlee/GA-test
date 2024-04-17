@@ -1,10 +1,9 @@
 name: Deploy Application
+
 on:
-  workflow_dispatch:
-    inputs:
-      version:
-        description: 'Tag version to deploy'
-        required: true
+  push:
+    branches:
+      - 'task-6-2'
 
 permissions:
   id-token: write   # This is required for requesting the JWT
