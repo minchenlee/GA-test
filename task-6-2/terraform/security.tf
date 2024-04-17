@@ -4,9 +4,9 @@
 
 # Security group for backend instance
 resource "aws_security_group" "backend-instance" {
-  name        = "thesis-backend-instance"
-  description = "Security group for thesis backend instance"
-  vpc_id      = module.vpc.vpc_id
+  name        = "backend-instance"
+  description = "Security group for backend instance"
+  vpc_id      = "vpc-08b0f9b0316a79ec5"
 
   ingress {
     description = "Allow SSH from anywhere"
@@ -21,7 +21,7 @@ resource "aws_security_group" "backend-instance" {
     from_port   = 3000
     to_port     = 3000
     protocol    = "tcp"
-    cidr_blocks = [module.vpc.vpc_cidr_block]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
