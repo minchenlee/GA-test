@@ -11,13 +11,13 @@ data "aws_ami" "ubuntu" {
 }
 
 
-# thesis backend instance a
-resource "aws_instance" "thesis-backend-a" {
+# backend instance a
+resource "aws_instance" "backend-a" {
   ami                         = data.aws_ami.ubuntu.id
   instance_type               = "t2.micro"
-  key_name                    = aws_key_pair.admin-ec2-ssh-key.key_name
-  vpc_security_group_ids      = [aws_security_group.thesis-backend-instance.id]
-  subnet_id                   = module.thesis-vpc.public_subnets[0]
+  key_name                    = "task-0-1-a"
+  vpc_security_group_ids      = [aws_security_group.backend-instance.id]
+  subnet_id                   = module.vpc.public_subnets[0]
   associate_public_ip_address = true
 
   user_data = <<-EOF
