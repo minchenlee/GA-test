@@ -6,7 +6,7 @@
 resource "aws_security_group" "backend-instance" {
   name        = "backend-instance"
   description = "Security group for backend instance"
-  vpc_id      = module.vpc.vpc_id
+  vpc_id      = "vpc-08b0f9b0316a79ec5"
 
   ingress {
     description = "Allow SSH from anywhere"
