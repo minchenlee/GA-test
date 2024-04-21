@@ -16,8 +16,8 @@ spec:
     spec:
       securityContext:
         runAsNonRoot: true
-        runAsUser: 10000
-        runAsGroup: 10000
+        runAsUser: 10001
+        runAsGroup: 10001
       containers:
       - image: dockersamples/examplevotingapp_vote:lastest
         name: vote
@@ -28,10 +28,8 @@ spec:
           requests:
             cpu: "100m"
             memory: "256Mi"
-            ephemeral-storage: "50Mi"
           limits:
             cpu: "200m"
             memory: "512Mi"
-            ephemeral-storage: "100Mi"
         securityContext:
           readOnlyRootFilesystem: true

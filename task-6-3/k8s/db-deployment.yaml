@@ -35,15 +35,13 @@ spec:
           requests:
             cpu: "100m"
             memory: "256Mi"
-            ephemeral-storage: "50Mi"
           limits:
             cpu: "500m"
             memory: "512Mi"
-            ephemeral-storage: "100Mi"
         securityContext:
           readOnlyRootFilesystem: true
-          runAsUser: 10000 # Set a higher user ID
-          runAsGroup: 10000 # Set a higher group ID
+          runAsUser: 10001 # Set a higher user ID
+          runAsGroup: 10001 # Set a higher group ID
         readinessProbe: # Added readiness probe
           tcpSocket:
             port: 5432
