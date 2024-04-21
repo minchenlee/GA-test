@@ -1,0 +1,3 @@
+checks:
+  exclude:
+    - "unset-image-tag"  # Excludes the check for images that do not have a tag set
