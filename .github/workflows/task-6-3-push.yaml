@@ -20,7 +20,7 @@ jobs:
       - uses: stackrox/kube-linter-action@v1.0.2
         with:
           directory: task-6-3/k8s
-          config: .kube-linter.yaml 
+          config: ../../.kube-linter.yaml
 
       - run: |
           kubeconform -kubernetes-version=1.24.0 task-6-3/k8s
