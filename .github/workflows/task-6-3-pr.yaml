@@ -40,8 +40,25 @@ jobs:
           script: |
             const fs = require('fs');
             const results = fs.readFileSync('kube-score-results.txt', 'utf8');
-            let body = "## Kube-score results\n\n";
-            body += results;
+            
+            // Function to format the kube-score output
+            function formatKubeScoreOutput(results) {
+              return results.split('\n').map((line, index, lines) => {
+                if (line.startsWith('apps/')) { // Assuming all relevant lines start with 'apps/'
+                  // Insert a markdown header and an extra newline for spacing
+                  return `\n### ${line}\n`;
+                }
+                // Add extra newlines between reports for better readability
+                if (line.startsWith('[OK]') || line.startsWith('[CRITICAL]')) {
+                  if (!(lines[index - 1] && lines[index - 1].startsWith('[OK]') || lines[index - 1].startsWith('[CRITICAL]'))) {
+                    return `\n${line}`;
+                  }
+                }
+                return line;
+              }).join('\n');
+            }
+
+            let body = "## Kube-score results\n\n" + formatKubeScoreOutput(results);
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
