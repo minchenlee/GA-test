@@ -19,7 +19,7 @@ spec:
         runAsUser: 10001  # BEGIN: Set higher user ID
         runAsGroup: 10001  # Set higher group ID
       containers:
-      - image: dockersamples/examplevotingapp_worker:lastest
+      - image: dockersamples/examplevotingapp_worker:latest
         name: worker
         imagePullPolicy: Always  # Set ImagePullPolicy to Always
         resources:
