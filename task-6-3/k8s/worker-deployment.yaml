@@ -16,4 +16,11 @@ spec:
     spec:
       containers:
       - image: dockersamples/examplevotingapp_worker
-        name: worker
+        name: worker        
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "256Mi"
+          limits:
+            cpu: "200m"
+            memory: "512Mi"
