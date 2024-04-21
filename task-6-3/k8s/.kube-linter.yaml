@@ -1,0 +1,4 @@
+checks:
+  exclude:
+    - "unset-image-tag"  # Excludes the check for images that do not have a tag set
+    - "read-only-root-fs" # Excludes the check for containers that do not have a read-only root filesystem
