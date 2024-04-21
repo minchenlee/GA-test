@@ -31,3 +31,20 @@ jobs:
 
       - name: Run kubescore scanner
         run: kube-score score task-6-3/k8s/*.yaml || true
+
+      - name: Comment PR with the kube-score results
+        uses: actions/github-script@v6
+        if: github.event_name == 'pull_request'
+        with:
+          github-token: ${{ secrets.TASK_6_3_PR_TOKEN }}
+          script: |
+            const results = `${{ steps.validation.outputs.kube-score.stdout }}`;
+            let body = "## Kube-score results\n\n";
+            body += results;
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });
+
