@@ -9,11 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: validate manifests k8s dir
-        uses: makocchi-git/actions-k8s-manifests-validate-conftest@v1.2.0
+      - uses: yokawasa/action-setup-kube-tools@v0.9.2
         with:
-          file: 'task-6-3/k8s'
-          comment: true
-          token: ${{ secrets.TASK_6_3_PR_TOKEN }}
-
-    
+          setup-tools: |
+            kubeconform
+            kustomize
+          kubeconform: '0.5.0'
+          kustomize: '4.5.7'
+      - run: |
+          kustomize build task-6-3/k8s | kubeconform -verbose
+          
