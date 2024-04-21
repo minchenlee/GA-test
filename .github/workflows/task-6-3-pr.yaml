@@ -27,7 +27,7 @@ jobs:
           kubeconform -kubernetes-version=1.22.0 task-6-3/k8s
 
       - run: |
-          kube-linter lint task-6-3/k8s
+          kube-linter lint task-6-3/k8s --auto-fix
 
       - run: |
           kubesec scan task-6-3/k8s
