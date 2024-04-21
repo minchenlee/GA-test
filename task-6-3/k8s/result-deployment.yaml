@@ -5,9 +5,6 @@ metadata:
     app: result
   name: result
 spec:
-  securityContext:
-    runAsNonRoot: true
-    runAsUser: 1000
   replicas: 1
   selector:
     matchLabels:
@@ -17,8 +14,11 @@ spec:
       labels:
         app: result
     spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
       containers:
-      - image: dockersamples/examplevotingapp_result
+      - image: dockersamples/examplevotingapp_result:lastest
         name: result
         ports:
         - containerPort: 80

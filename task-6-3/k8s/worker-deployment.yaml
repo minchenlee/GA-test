@@ -5,9 +5,6 @@ metadata:
     app: worker
   name: worker
 spec:
-  securityContext:
-    runAsNonRoot: true
-    runAsUser: 1000
   replicas: 1
   selector:
     matchLabels:
@@ -17,8 +14,11 @@ spec:
       labels:
         app: worker
     spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
       containers:
-      - image: dockersamples/examplevotingapp_worker
+      - image: dockersamples/examplevotingapp_worker:lastest
         name: worker        
         resources:
           requests:
