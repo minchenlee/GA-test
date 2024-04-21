@@ -14,10 +14,6 @@ spec:
       labels:
         app: result
     spec:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 10001
-        runAsGroup: 10001
       containers:
       - image: dockersamples/examplevotingapp_result:latest
         name: result
