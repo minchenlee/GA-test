@@ -16,16 +16,20 @@ spec:
     spec:
       securityContext:
         runAsNonRoot: true
-        runAsUser: 1000
+        runAsUser: 10001  # BEGIN: Set higher user ID
+        runAsGroup: 10001  # Set higher group ID
       containers:
       - image: dockersamples/examplevotingapp_worker:lastest
-        name: worker        
+        name: worker
+        imagePullPolicy: Always  # Set ImagePullPolicy to Always
         resources:
           requests:
             cpu: "100m"
             memory: "256Mi"
+            ephemeral-storage: "50Mi"  # Set ephemeral storage limit
           limits:
             cpu: "200m"
             memory: "512Mi"
+            ephemeral-storage: "100Mi"  # Set ephemeral storage limit
         securityContext:
           readOnlyRootFilesystem: true
