@@ -28,6 +28,6 @@ jobs:
           kubeconform -kubernetes-version=1.22.0 task-6-3/k8s
       
       - name: Run kubesec scanner
-        uses: controlplaneio/kubesec-action@master
+        uses: controlplaneio/kubesec-action@v0.0.2
         with:
           input: task-6-3/k8s/*.yaml
