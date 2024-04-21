@@ -1,0 +1,19 @@
+name: K8s - PR
+on:
+  pull_request:
+    branches:
+      - 'task-6-3'
+
+jobs:
+  validation:
+    defaults:
+      run:
+        working-directory: 'task-6-3/k8s'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: validate manifests in dir1 and dir2
+        uses: makocchi-git/actions-k8s-manifests-validate-kubeval@1.0.0
+        with:
+          files: .
+    
