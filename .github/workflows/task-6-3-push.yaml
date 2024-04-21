@@ -26,10 +26,13 @@ jobs:
           kubeconform -kubernetes-version=1.24.0 task-6-3/k8s
           kubeconform -kubernetes-version=1.23.0 task-6-3/k8s
           kubeconform -kubernetes-version=1.22.0 task-6-3/k8s
+
+      - name: Collect all yaml
+        run: find . -type f -name "*.yaml" -exec sh -c "echo '---' | cat - {}" \; > all.yaml
       
       - name: Run kubesec scanner
         uses: controlplaneio/kubesec-action@v0.0.2
         with:
-          input: task-6-3/k8s/*.yaml
+          input: all.yaml
 
 
