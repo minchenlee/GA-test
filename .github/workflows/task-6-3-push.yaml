@@ -15,5 +15,5 @@ jobs:
       - name: validate manifests k8s dir
         uses: makocchi-git/actions-k8s-manifests-validate-conftest@v1.2.0
         with:
-          files: .
+          file: .
           comment: false
