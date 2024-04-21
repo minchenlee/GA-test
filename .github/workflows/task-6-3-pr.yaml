@@ -12,8 +12,8 @@ jobs:
       - name: validate manifests k8s dir
         uses: makocchi-git/actions-k8s-manifests-validate-conftest@v1.2.0
         with:
-          file: .
-          comment: 'task-6-3/k8s'
+          file: 'task-6-3/k8s'
+          comment: true
           token: ${{ secrets.TASK_6_3_PR_TOKEN }}
 
     

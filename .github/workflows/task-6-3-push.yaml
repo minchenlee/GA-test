@@ -13,4 +13,5 @@ jobs:
         uses: makocchi-git/actions-k8s-manifests-validate-conftest@v1.2.0
         with:
           file: 'task-6-3/k8s'
+          trace: true
           comment: false
