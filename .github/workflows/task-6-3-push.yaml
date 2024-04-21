@@ -6,14 +6,11 @@ on:
 
 jobs:
   validation:
-    defaults:
-      run:
-        working-directory: 'task-6-3/k8s'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: validate manifests k8s dir
         uses: makocchi-git/actions-k8s-manifests-validate-conftest@v1.2.0
         with:
-          file: .
+          file: 'task-6-3/k8s'
           comment: false
