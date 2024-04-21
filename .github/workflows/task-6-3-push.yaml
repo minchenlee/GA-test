@@ -13,7 +13,9 @@ jobs:
         with:
           setup-tools: |
             kubeconform
+            kube-score
           kubeconform: '0.5.0'
+          kube-score: '1.16.1'
       
       - name: Run kubelinter
         uses: stackrox/kube-linter-action@v1.0.2
@@ -27,12 +29,6 @@ jobs:
           kubeconform -kubernetes-version=1.23.0 task-6-3/k8s
           kubeconform -kubernetes-version=1.22.0 task-6-3/k8s
 
-      - name: Collect all yaml
-        run: find . -type f -name "*.yaml" -exec sh -c "echo '---' | cat - {}" \; > all.yaml
-      
-      - name: Run kubesec scanner
-        uses: controlplaneio/kubesec-action@v0.0.2
-        with:
-          input: all.yaml
-
+      - name: Run kubescore scanner
+        run: kube-score score task-6-3/k8s/*.yaml
 
