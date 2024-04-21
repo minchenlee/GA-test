@@ -41,7 +41,7 @@ jobs:
             const results = `${{ steps.validation.outputs.kube-score.stdout }}`;
             let body = "## Kube-score results\n\n";
             body += results;
-            github.issues.createComment({
+            github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
