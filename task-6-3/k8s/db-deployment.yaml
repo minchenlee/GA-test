@@ -38,10 +38,6 @@ spec:
           limits:
             cpu: "500m"
             memory: "512Mi"
-        securityContext:
-          readOnlyRootFilesystem: true
-          runAsUser: 10001 # Set a higher user ID
-          runAsGroup: 10001 # Set a higher group ID
         readinessProbe: # Added readiness probe
           tcpSocket:
             port: 5432

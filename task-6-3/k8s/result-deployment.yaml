@@ -19,7 +19,7 @@ spec:
         runAsUser: 10001
         runAsGroup: 10001
       containers:
-      - image: dockersamples/examplevotingapp_result:lastest
+      - image: dockersamples/examplevotingapp_result:latest
         name: result
         ports:
         - containerPort: 80
@@ -31,7 +31,5 @@ spec:
           limits:
             cpu: "500m"
             memory: "512Mi"
-
         securityContext:
           readOnlyRootFilesystem: true
-        imagePullPolicy: Always

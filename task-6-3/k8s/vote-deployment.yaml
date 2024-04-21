@@ -19,7 +19,7 @@ spec:
         runAsUser: 10001
         runAsGroup: 10001
       containers:
-      - image: dockersamples/examplevotingapp_vote:lastest
+      - image: dockersamples/examplevotingapp_vote:latest
         name: vote
         ports:
         - containerPort: 80

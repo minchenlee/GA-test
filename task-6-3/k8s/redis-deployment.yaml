@@ -33,10 +33,6 @@ spec:
           limits:
             cpu: "200m"
             memory: "256Mi"
-        securityContext:
-          readOnlyRootFilesystem: true
-          runAsUser: 10001 # BEGIN: Set runAsUser to a value > 10000
-          runAsGroup: 10001 # BEGIN: Set runAsGroup to a value > 10000
         readinessProbe: # BEGIN: Added readiness probe
           tcpSocket:
             port: 6379
