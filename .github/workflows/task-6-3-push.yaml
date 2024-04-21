@@ -17,4 +17,4 @@ jobs:
           kubeconform: '0.5.0'
           kustomize: '4.5.7'
       - run: |
-          kubeconform task-6-3/k8s
+          kubeconform task-6-3/k8s/nginx-deploy.yaml
