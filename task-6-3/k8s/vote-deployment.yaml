@@ -14,10 +14,22 @@ spec:
       labels:
         app: vote
     spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
       containers:
-      - image: dockersamples/examplevotingapp_vote
+      - image: dockersamples/examplevotingapp_vote:lastest
         name: vote
         ports:
         - containerPort: 80
           name: vote
-          
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "256Mi"
+          limits:
+            cpu: "200m"
+            memory: "512Mi"
+        securityContext:
+          readOnlyRootFilesystem: true

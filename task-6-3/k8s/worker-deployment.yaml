@@ -14,6 +14,20 @@ spec:
       labels:
         app: worker
     spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001  # BEGIN: Set higher user ID
+        runAsGroup: 10001  # Set higher group ID
       containers:
-      - image: dockersamples/examplevotingapp_worker
+      - image: dockersamples/examplevotingapp_worker:lastest
         name: worker
+        imagePullPolicy: Always  # Set ImagePullPolicy to Always
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "256Mi"
+          limits:
+            cpu: "200m"
+            memory: "512Mi"
+        securityContext:
+          readOnlyRootFilesystem: true

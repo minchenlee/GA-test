@@ -14,6 +14,9 @@ spec:
       labels:
         app: db
     spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
       containers:
       - image: postgres:15-alpine
         name: postgres
@@ -28,6 +31,21 @@ spec:
         volumeMounts:
         - mountPath: /var/lib/postgresql/data
           name: db-data
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "256Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+        securityContext:
+          readOnlyRootFilesystem: true
+          runAsUser: 10001 # Set a higher user ID
+          runAsGroup: 10001 # Set a higher group ID
+        readinessProbe: # Added readiness probe
+          tcpSocket:
+            port: 5432
+        imagePullPolicy: Always # Set image pull policy to Always
       volumes:
       - name: db-data
-        emptyDir: {} 
+        emptyDir: {}

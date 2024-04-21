@@ -14,10 +14,24 @@ spec:
       labels:
         app: result
     spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
       containers:
-      - image: dockersamples/examplevotingapp_result
+      - image: dockersamples/examplevotingapp_result:lastest
         name: result
         ports:
         - containerPort: 80
           name: result
-          
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "256Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+
+        securityContext:
+          readOnlyRootFilesystem: true
+        imagePullPolicy: Always

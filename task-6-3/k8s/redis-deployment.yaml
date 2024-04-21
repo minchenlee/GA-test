@@ -14,6 +14,9 @@ spec:
       labels:
         app: redis
     spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
       containers:
       - image: redis:alpine
         name: redis
@@ -23,6 +26,21 @@ spec:
         volumeMounts:
         - mountPath: /data
           name: redis-data
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "200m"
+            memory: "256Mi"
+        securityContext:
+          readOnlyRootFilesystem: true
+          runAsUser: 10001 # BEGIN: Set runAsUser to a value > 10000
+          runAsGroup: 10001 # BEGIN: Set runAsGroup to a value > 10000
+        readinessProbe: # BEGIN: Added readiness probe
+          tcpSocket:
+            port: 6379
+        imagePullPolicy: Always # BEGIN: Set ImagePullPolicy to Always
       volumes:
       - name: redis-data
-        emptyDir: {} 
+        emptyDir: {}

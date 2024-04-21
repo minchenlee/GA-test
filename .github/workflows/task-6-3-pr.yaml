@@ -13,9 +13,58 @@ jobs:
         with:
           setup-tools: |
             kubeconform
-            kustomize
+            kube-score
           kubeconform: '0.5.0'
-          kustomize: '4.5.7'
-      - run: |
-          kubeconform task-6-3/k8s
-          
+          kube-score: '1.16.1'
+      
+      - name: Run kubelinter
+        uses: stackrox/kube-linter-action@v1.0.2
+        with:
+          directory: task-6-3/k8s
+          config: .kube-linter.yaml
+
+      - name: Run kubeconform
+        run: |
+          kubeconform -kubernetes-version=1.24.0 task-6-3/k8s
+          kubeconform -kubernetes-version=1.23.0 task-6-3/k8s
+          kubeconform -kubernetes-version=1.22.0 task-6-3/k8s
+
+      - name: Run kubescore scanner
+        run: kube-score score task-6-3/k8s/*.yaml > kube-score-results.txt || true
+
+      - name: Comment PR with the kube-score results
+        uses: actions/github-script@v6
+        if: github.event_name == 'pull_request'
+        with:
+          github-token: ${{ secrets.TASK_6_3_PR_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const results = fs.readFileSync('kube-score-results.txt', 'utf8');
+
+            const emojiRegex = /[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{2B50}\u{2B55}\u{1F004}\u{1F0CF}\u{1F18E}\u{3030}\u{1F191}-\u{1F251}\u{1F201}-\u{1F251}]/u;
+            
+            // Function to format the kube-score output
+            function formatKubeScoreOutput(results) {
+              return results.split('\n').map((line, index, lines) => {
+                if (emojiRegex.test(line)) {
+                  // Insert a markdown header and an extra newline for spacing
+                  return `\n### ${line}\n`;
+                }
+                // Add extra newlines between reports for better readability
+                if (line.startsWith('[OK]') || line.startsWith('[CRITICAL]')) {
+                  if (!(lines[index - 1] && lines[index - 1].startsWith('[OK]') || lines[index - 1].startsWith('[CRITICAL]'))) {
+                    return `\n${line}`;
+                  }
+                }
+                return line;
+              }).join('\n');
+            }
+
+            let body = "## Kube-score results\n\n" + formatKubeScoreOutput(results);
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });
+

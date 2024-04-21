@@ -13,8 +13,24 @@ jobs:
         with:
           setup-tools: |
             kubeconform
-            kustomize
+            kube-score
           kubeconform: '0.5.0'
-          kustomize: '4.5.7'
-      - run: |
-          kubeconform -summary task-6-3/k8s
+          kube-score: '1.16.1'
+      
+      - name: Run kubelinter
+        uses: stackrox/kube-linter-action@v1.0.2
+        with:
+          directory: task-6-3/k8s
+          config: .kube-linter.yaml
+
+      - name: Run kubeconform
+        run: |
+          kubeconform -kubernetes-version=1.24.0 task-6-3/k8s
+          kubeconform -kubernetes-version=1.23.0 task-6-3/k8s
+          kubeconform -kubernetes-version=1.22.0 task-6-3/k8s
+
+      - name: Run kubescore scanner
+        run: |
+          set +e  # Ignore errors
+          kube-score score task-6-3/k8s/*.yaml || true
+
