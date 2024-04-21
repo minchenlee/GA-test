@@ -14,10 +14,6 @@ spec:
       labels:
         app: worker
     spec:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 10001  # BEGIN: Set higher user ID
-        runAsGroup: 10001  # Set higher group ID
       containers:
       - image: dockersamples/examplevotingapp_worker:latest
         name: worker

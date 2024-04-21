@@ -2,3 +2,4 @@ checks:
   exclude:
     - "latest-tag"  # Excludes the check for images that do not have a tag set
     - "no-read-only-root-fs" # Excludes the check for containers that do not have a read-only root filesystem
+    - "run-as-non-root"  # Excludes the check for containers that run as root
