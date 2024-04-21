@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: validate manifests k8s dir
-        uses: makocchi-git/actions-k8s-manifests-validate-kubeval@1.2.0
+        uses: makocchi-git/actions-k8s-manifests-validate-conftest@1.2.0
         with:
           files: .
           comment: true
