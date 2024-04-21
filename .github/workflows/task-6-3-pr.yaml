@@ -41,16 +41,20 @@ jobs:
             const fs = require('fs');
             const results = fs.readFileSync('kube-score-results.txt', 'utf8');
             
+            // Regex to detect emojis in a string
+            const emojiRegex = /[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{2B50}\u{2B55}\u{1F004}\u{1F0CF}\u{1F18E}\u{3030}\u{1F191}-\u{1F251}\u{1F201}-\u{1F251}]/u;
+
             // Function to format the kube-score output
             function formatKubeScoreOutput(results) {
               return results.split('\n').map((line, index, lines) => {
-                if (line.startsWith('apps/')) { // Assuming all relevant lines start with 'apps/'
-                  // Insert a markdown header and an extra newline for spacing
+                // Check if the line contains any emoji
+                if (emojiRegex.test(line)) {
+                  // Insert a markdown header with extra newline for spacing
                   return `\n### ${line}\n`;
                 }
-                // Add extra newlines between reports for better readability
-                if (line.startsWith('[OK]') || line.startsWith('[CRITICAL]')) {
-                  if (!(lines[index - 1] && lines[index - 1].startsWith('[OK]') || lines[index - 1].startsWith('[CRITICAL]'))) {
+                // Add extra newlines between different types of messages for readability
+                if (line.startsWith('[OK]') || line.startsWith('[CRITICAL]') || line.startsWith('[WARNING]')) {
+                  if (!(lines[index - 1] && (lines[index - 1].startsWith('[OK]') || lines[index - 1].startsWith('[CRITICAL]') || lines[index - 1].startsWith('[WARNING]'))) {
                     return `\n${line}`;
                   }
                 }
