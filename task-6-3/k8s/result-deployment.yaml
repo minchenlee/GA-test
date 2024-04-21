@@ -5,6 +5,9 @@ metadata:
     app: result
   name: result
 spec:
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 1000
   replicas: 1
   selector:
     matchLabels:
@@ -27,3 +30,5 @@ spec:
           limits:
             cpu: "500m"
             memory: "512Mi"
+        securityContext:
+          readOnlyRootFilesystem: true

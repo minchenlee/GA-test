@@ -5,6 +5,9 @@ metadata:
     app: worker
   name: worker
 spec:
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 1000
   replicas: 1
   selector:
     matchLabels:
@@ -24,3 +27,5 @@ spec:
           limits:
             cpu: "200m"
             memory: "512Mi"
+        securityContext:
+          readOnlyRootFilesystem: true
